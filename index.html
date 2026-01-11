@@ -1,213 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FathirDevZx - Blox Fruits Shop</title>
+<title>FathirDevZx — Web Development Agency</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --primary:#00fff7;
-  --secondary:#ff00d4;
-  --accent:#ffaa00;
-  --bg:#0a0a0a;
-  --card-bg:rgba(20,20,20,0.85);
-  --glass:rgba(255,255,255,0.05);
-  --transition:0.4s ease;
+ --neon:#00fff7;
+ --pink:#ff00d4;
+ --gold:#ffaa00;
+ --bg:#070707;
+ --glass:rgba(255,255,255,0.06);
+ --card:rgba(15,15,15,0.9);
+ --blur:blur(14px);
+ --tr:0.45s cubic-bezier(.4,0,.2,1);
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:var(--bg);color:#fff;overflow-x:hidden;}
-button{cursor:pointer;border:none;outline:none;font-weight:600;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:radial-gradient(circle at top,#0f0f0f,#000);color:#fff}
 
-/* Navbar */
 nav{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:1rem 2rem;backdrop-filter:blur(12px);background:var(--glass);
-  position:sticky;top:0;z-index:1000;box-shadow:0 0 25px rgba(0,255,255,0.3);
+ position:sticky;top:0;z-index:1000;
+ display:flex;justify-content:space-between;align-items:center;
+ padding:1.2rem 2.5rem;
+ background:var(--glass);
+ backdrop-filter:var(--blur);
+ border-bottom:1px solid rgba(255,255,255,0.08);
 }
-nav h1{color:var(--primary);letter-spacing:1px;font-size:1.5rem;}
-nav .cart-btn{padding:0.5rem 1rem;background:var(--secondary);border-radius:8px;transition:var(--transition);}
-nav .cart-btn:hover{background:var(--primary);transform:scale(1.05);}
-
-/* Main container */
-main{padding:2rem;display:flex;flex-direction:column;gap:2rem;align-items:center;}
-
-/* Shop grid */
-.shop-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;width:100%;
+nav h1{color:var(--neon);font-size:1.6rem}
+nav button{
+ background:linear-gradient(135deg,var(--pink),var(--neon));
+ padding:.6rem 1.3rem;border-radius:10px;
+ font-weight:700;color:#000
 }
+
+main{max-width:1200px;margin:auto;padding:4rem 2rem}
+
+.hero{text-align:center;margin-bottom:4rem}
+.hero h2{
+ font-size:2.6rem;
+ background:linear-gradient(90deg,var(--neon),var(--pink));
+ -webkit-background-clip:text;color:transparent
+}
+.hero p{color:#aaa;max-width:600px;margin:1rem auto}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+ gap:2.5rem;
+}
+
 .card{
-  background:var(--card-bg);border-radius:16px;padding:1rem;backdrop-filter:blur(12px);
-  transition:var(--transition);position:relative;overflow:hidden;
+ background:var(--card);
+ border-radius:22px;
+ padding:2rem;
+ transition:var(--tr);
+ border:1px solid rgba(255,255,255,.08);
+ position:relative;
 }
-.card:hover{transform:translateY(-10px);box-shadow:0 0 25px var(--primary);}
-.card img{width:100%;border-radius:12px;filter:drop-shadow(0 0 10px var(--primary));transition:0.4s;}
-.card:hover img{transform:scale(1.05);}
-.card h3{margin:0.5rem 0;color:var(--primary);}
-.card .price{color:var(--secondary);font-weight:700;font-size:1.1rem;}
-.card button{
-  margin-top:0.5rem;width:100%;padding:0.6rem;background:var(--secondary);
-  border-radius:10px;transition:var(--transition);font-weight:700;
-}
-.card button:hover{background:var(--primary);transform:scale(1.05);}
+.card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 0 35px var(--neon)}
 
-/* Badge */
 .badge{
-  position:absolute;top:0.5rem;left:0.5rem;padding:0.3rem 0.7rem;border-radius:6px;font-size:0.8rem;font-weight:700;
-  color:#fff;background:var(--accent);text-transform:uppercase;letter-spacing:0.5px;
+ position:absolute;top:1.2rem;right:1.2rem;
+ padding:.35rem .9rem;border-radius:999px;
+ font-size:.75rem;
+ background:linear-gradient(135deg,var(--gold),var(--pink));
+ color:#000;font-weight:700
 }
 
-/* Cart */
+.card h3{color:var(--neon);margin-bottom:.8rem}
+.card li{color:#ccc;margin:.45rem 0;font-size:.9rem}
+
+.price{
+ font-size:1.4rem;font-weight:800;
+ color:var(--pink);margin:1.2rem 0
+}
+
+.card button{
+ width:100%;padding:.7rem;border-radius:12px;
+ background:linear-gradient(135deg,var(--pink),var(--neon));
+ font-weight:800;color:#000
+}
+
 .cart{
-  position:fixed;right:1rem;top:5rem;background:var(--card-bg);
-  padding:1rem;border-radius:18px;width:300px;max-height:70vh;overflow-y:auto;
-  backdrop-filter:blur(12px);display:none;box-shadow:0 0 25px var(--primary);
+ position:fixed;right:1.5rem;top:6rem;
+ width:340px;
+ background:var(--card);
+ border-radius:22px;
+ padding:1.5rem;
+ display:none;
+ box-shadow:0 0 40px rgba(0,255,255,.35);
+ z-index:2000;
 }
-.cart h3{margin-bottom:1rem;color:var(--primary);}
-.cart-item{display:flex;justify-content:space-between;margin-bottom:0.5rem;align-items:center;}
-.cart-item input{width:50px;background:rgba(255,255,255,0.05);border:none;color:#fff;padding:0.2rem 0.5rem;border-radius:6px;text-align:center;}
-.cart-item button{background:red;color:#fff;border-radius:6px;padding:0 0.4rem;transition:0.3s;}
-.cart-item button:hover{transform:scale(1.1);}
+.cart h4{color:var(--neon);margin-bottom:.8rem}
+.cart-item{
+ display:flex;justify-content:space-between;align-items:center;
+ margin:.6rem 0;font-size:.9rem
+}
+.cart-item input{
+ width:55px;background:#111;color:#fff;
+ border:none;border-radius:8px;text-align:center
+}
 
-/* Discount input */
-#discount-code{width:100%;padding:0.5rem;margin:0.5rem 0;border-radius:6px;border:none;background:rgba(255,255,255,0.05);color:#fff;}
-
-/* Toast */
 .toast{
-  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);
-  background:var(--primary);color:#000;padding:0.8rem 1.5rem;border-radius:12px;
-  opacity:0;pointer-events:none;transition:0.5s;z-index:3000;font-weight:600;
+ position:fixed;bottom:1.2rem;left:50%;
+ transform:translateX(-50%);
+ background:linear-gradient(135deg,var(--neon),var(--pink));
+ color:#000;padding:.8rem 1.6rem;
+ border-radius:14px;opacity:0;
+ transition:.4s;font-weight:700;
+ z-index:3000
 }
-.toast.show{opacity:1;pointer-events:auto;}
-
-/* Loading */
-.loading{
-  position:fixed;inset:0;display:flex;justify-content:center;align-items:center;
-  background:rgba(0,0,0,0.7);z-index:2000;color:var(--primary);font-size:1.5rem;display:none;
-}
+.toast.show{opacity:1}
 </style>
 </head>
+
 <body>
 
 <nav>
-  <h1>FathirDevZx</h1>
-  <button class="cart-btn" id="cart-btn">Keranjang</button>
+ <h1>FathirDevZx</h1>
+ <button onclick="toggleCart()">Keranjang</button>
 </nav>
 
-<div class="loading" id="loading">Loading...</div>
-
 <main>
-  <h2 style="color:var(--primary);margin-bottom:1rem;">Shop Blox Fruits</h2>
-  <div class="shop-grid" id="shop-grid"></div>
+<section class="hero">
+ <h2>Web Development Agency</h2>
+ <p>Membangun website modern, cepat, dan profesional untuk brand yang ingin naik level.</p>
+</section>
+
+<section class="grid" id="grid"></section>
 </main>
 
 <div class="cart" id="cart">
-  <h3>Keranjang</h3>
-  <div id="cart-items"></div>
-  <input type="text" id="discount-code" placeholder="Kode Diskon: ftrcode11 (selamanya)">
-  <p>Total: Rp <span id="cart-total">0</span></p>
-  <button id="apply-discount">Gunakan Diskon</button>
-  <button id="checkout">Bayar via DANA</button>
+ <h4>Keranjang</h4>
+ <div id="items"></div>
+ <p>Total: Rp <span id="total">0</span></p>
+ <button onclick="checkout()">Checkout</button>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const shopItems=[
-  {id:1,name:"Leopard",price:70000,img:"https://www.roblox.com/asset/?id=12345",badge:"Hot"},
-  {id:2,name:"Dough",price:50000,img:"https://www.roblox.com/asset/?id=23456",badge:"Popular"},
-  {id:3,name:"Dragon",price:150000,img:"https://www.roblox.com/asset/?id=34567",badge:"Limited"},
-  {id:4,name:"Game Pass",price:30000,img:"https://www.roblox.com/asset/?id=45678",badge:"Hot"}
+const services=[
+{
+ id:1,
+ name:"Website Tanpa Hosting",
+ price:23000,
+ badge:"Basic",
+ list:["Source code full","Desain modern","Siap dikembangkan"]
+},
+{
+ id:2,
+ name:"Website + Hosting",
+ price:30000,
+ badge:"Recommended",
+ list:["Website siap online","Hosting aktif","Support dasar"]
+}
 ];
 
 let cart=[];
-let discountApplied=false;
-const shopGrid=document.getElementById('shop-grid');
-const cartEl=document.getElementById('cart');
-const cartItemsEl=document.getElementById('cart-items');
-const cartTotalEl=document.getElementById('cart-total');
-const toastEl=document.getElementById('toast');
-const discountInput=document.getElementById('discount-code');
-const loadingEl=document.getElementById('loading');
+const grid=document.getElementById('grid');
+const cartBox=document.getElementById('cart');
+const items=document.getElementById('items');
+const totalEl=document.getElementById('total');
+const toast=document.getElementById('toast');
 
-function showToast(msg){
-  toastEl.textContent=msg;
-  toastEl.classList.add('show');
-  setTimeout(()=>toastEl.classList.remove('show'),3000);
+function toastShow(t){
+ toast.textContent=t;
+ toast.classList.add('show');
+ setTimeout(()=>toast.classList.remove('show'),2500);
 }
 
-function renderShop(){
-  shopGrid.innerHTML='';
-  shopItems.forEach(item=>{
-    const card=document.createElement('div');
-    card.className='card';
-    card.innerHTML=`
-      <div class="badge">${item.badge}</div>
-      <img src="${item.img}" alt="${item.name}">
-      <h3>${item.name}</h3>
-      <p class="price">Rp ${item.price.toLocaleString()}</p>
-      <button onclick="addToCart(${item.id})">Tambahkan ke Keranjang</button>
-    `;
-    shopGrid.appendChild(card);
-  });
-}
-
-function updateCart(){
-  if(cart.length===0){cartEl.style.display='none'; return;}
-  cartEl.style.display='block';
-  cartItemsEl.innerHTML='';
-  let total=0;
-  cart.forEach(item=>{
-    total+=item.price*item.qty;
-    const div=document.createElement('div');
-    div.className='cart-item';
-    div.innerHTML=`<span>${item.name} - Rp ${item.price.toLocaleString()} x </span><input type="number" min="1" value="${item.qty}" onchange="updateQty(${item.id},this.value)"><button onclick="removeFromCart(${item.id})">X</button>`;
-    cartItemsEl.appendChild(div);
-  });
-  if(discountApplied) total=Math.round(total*0.8);
-  cartTotalEl.textContent=total.toLocaleString();
-}
-
-function addToCart(id){
-  const item=shopItems.find(i=>i.id===id);
-  if(item){
-    const existing=cart.find(i=>i.id===id);
-    if(existing){existing.qty++;}
-    else {cart.push({...item,qty:1});}
-    updateCart();
-    showToast(`${item.name} ditambahkan`);
-  }
-}
-
-function updateQty(id,value){
-  const item=cart.find(i=>i.id===id);
-  if(item){item.qty=Math.max(1,parseInt(value));updateCart();}
-}
-
-function removeFromCart(id){
-  cart=cart.filter(i=>i.id!==id);updateCart();
-}
-
-document.getElementById('checkout').addEventListener('click',()=>{
-  if(cart.length===0){showToast('Keranjang kosong');return;}
-  const total=cart.reduce((sum,i)=>sum+i.price*i.qty,0);
-  const final=discountApplied?Math.round(total*0.8):total;
-  window.open(`https://link.dana.id/transfer?amount=${final}`,'_blank');
+services.forEach(s=>{
+ grid.innerHTML+=`
+ <div class="card">
+  <span class="badge">${s.badge}</span>
+  <h3>${s.name}</h3>
+  <ul>${s.list.map(l=>`<li>✔ ${l}</li>`).join('')}</ul>
+  <div class="price">Rp ${s.price.toLocaleString('id-ID')}</div>
+  <button onclick="addItem(${s.id})">Tambah ke Keranjang</button>
+ </div>`;
 });
 
-document.getElementById('apply-discount').addEventListener('click',()=>{
-  if(discountInput.value.trim().toLowerCase()==='ftrcode11'){
-    discountApplied=true;
-    updateCart();
-    showToast('Diskon 20% diterapkan!');
-  }else{showToast('Kode diskon salah');}
-});
+function addItem(id){
+ const s=services.find(x=>x.id===id);
+ const e=cart.find(x=>x.id===id);
+ e ? e.qty++ : cart.push({...s,qty:1});
+ renderCart();
+ toastShow("Ditambahkan ke keranjang");
+}
 
-document.getElementById('cart-btn').addEventListener('click',()=>cartEl.style.display=(cartEl.style.display==='block')?'none':'block');
+function renderCart(){
+ if(!cart.length){cartBox.style.display='none';return}
+ cartBox.style.display='block';
+ items.innerHTML='';
+ let total=0;
+ cart.forEach(i=>{
+  total+=i.price*i.qty;
+  items.innerHTML+=`
+   <div class="cart-item">
+    <span>${i.name}</span>
+    <input type="number" min="1" value="${i.qty}"
+     onchange="updateQty(${i.id},this.value)">
+   </div>`;
+ });
+ totalEl.textContent=total.toLocaleString('id-ID');
+}
 
-function simulateLoading(){loadingEl.style.display='flex';setTimeout(()=>loadingEl.style.display='none',800);}
-simulateLoading();
-renderShop();
+function updateQty(id,v){
+ const i=cart.find(x=>x.id===id);
+ i.qty=Math.max(1,parseInt(v)||1);
+ renderCart();
+}
+
+function toggleCart(){
+ cartBox.style.display =
+ cartBox.style.display==='block'?'none':'block';
+}
+
+function checkout(){
+ if(!cart.length) return toastShow("Keranjang masih kosong");
+ toastShow("Menuju WhatsApp...");
+}
 </script>
 
 </body>
@@ -220,6 +235,7 @@ renderShop();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FathirDevZx - Customer Service</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --primary:#00fff7;
@@ -232,92 +248,214 @@ renderShop();
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:var(--bg);color:#fff;overflow-x:hidden;position:relative;}
-button{cursor:pointer;border:none;outline:none;font-weight:600;transition:var(--transition);}
+button{cursor:pointer;border:none;font-weight:600;transition:var(--transition);}
 
 /* Background particles */
 #particles{
-  position:fixed;inset:0;z-index:0;pointer-events:none;}
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
 
 /* Navbar */
 nav{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:1rem 2rem;backdrop-filter:blur(12px);background:var(--glass);
-  position:sticky;top:0;z-index:1000;box-shadow:0 0 25px rgba(0,255,255,0.3);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem 2rem;
+  backdrop-filter:blur(12px);
+  background:var(--glass);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 0 25px rgba(0,255,255,0.3);
 }
-nav h1{color:var(--primary);letter-spacing:1px;font-size:1.5rem;}
+nav h1{
+  color:var(--primary);
+  letter-spacing:1px;
+  font-size:1.5rem;
+}
+
+/* Main */
+main{
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  gap:2rem;
+  align-items:center;
+  position:relative;
+  z-index:1;
+}
 
 /* CS Grid */
-main{padding:2rem;display:flex;flex-direction:column;gap:2rem;align-items:center;position:relative;z-index:1;}
 .cs-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;width:100%;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:2rem;
+  width:100%;
 }
+
 .cs-card{
-  background: var(--card-bg); border-radius:16px; padding:2rem; backdrop-filter:blur(12px);
-  display:flex; flex-direction:column; align-items:center; text-align:center; transition: var(--transition);
-  border:2px solid transparent; cursor:pointer;
+  background:var(--card-bg);
+  border-radius:16px;
+  padding:2rem;
+  backdrop-filter:blur(12px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  transition:var(--transition);
+  border:2px solid transparent;
+  cursor:pointer;
 }
 .cs-card:hover{
   transform:translateY(-10px);
   border-color:var(--primary);
   box-shadow:0 0 30px var(--primary);
 }
-.cs-card img{width:80px;margin-bottom:1rem;filter:drop-shadow(0 0 10px var(--primary));transition:0.4s;}
-.cs-card:hover img{transform:scale(1.1);}
-.cs-card h3{margin-bottom:0.5rem;color:var(--primary);}
-.cs-card p{margin-bottom:1rem;color:#ccc;}
-.cs-card button{
-  padding:0.6rem 1.2rem;border-radius:10px;background:var(--secondary);
-  color:#fff;font-weight:700;transition:var(--transition);
+.cs-card img{
+  width:80px;
+  margin-bottom:1rem;
+  filter:drop-shadow(0 0 10px var(--primary));
+  transition:0.4s;
 }
-.cs-card button:hover{background:var(--primary);transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
+.cs-card:hover img{
+  transform:scale(1.1);
+}
+.cs-card h3{
+  margin-bottom:0.5rem;
+  color:var(--primary);
+}
+.cs-card p{
+  margin-bottom:1rem;
+  color:#ccc;
+}
+.cs-card button{
+  padding:0.6rem 1.2rem;
+  border-radius:10px;
+  background:var(--secondary);
+  color:#fff;
+  font-weight:700;
+}
+.cs-card button:hover{
+  background:var(--primary);
+  transform:scale(1.1);
+  box-shadow:0 0 15px var(--primary);
+}
 
-/* Modal Chat */
+/* Modal */
 .modal{
-  position:fixed;inset:0;display:flex;justify-content:center;align-items:center;
-  background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);opacity:0;pointer-events:none;transition:0.4s;
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(5px);
+  opacity:0;
+  pointer-events:none;
+  transition:0.4s;
   z-index:2000;
 }
-.modal.show{opacity:1;pointer-events:auto;}
+.modal.show{
+  opacity:1;
+  pointer-events:auto;
+}
 .modal-content{
-  background:var(--card-bg);border-radius:16px;width:90%;max-width:400px;
-  padding:2rem;display:flex;flex-direction:column;gap:1rem;position:relative;
+  background:var(--card-bg);
+  border-radius:16px;
+  width:90%;
+  max-width:400px;
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  position:relative;
   animation:modalIn 0.4s ease forwards;
 }
 @keyframes modalIn{
-  0%{transform:translateY(-50px);opacity:0;}
-  100%{transform:translateY(0);opacity:1;}
+  from{transform:translateY(-50px);opacity:0}
+  to{transform:translateY(0);opacity:1}
 }
-.modal-content h3{color:var(--primary);}
+.modal-content h3{
+  color:var(--primary);
+}
 .modal-content textarea{
-  width:100%;padding:0.8rem;border-radius:8px;background:rgba(255,255,255,0.05);
-  color:#fff;border:none;resize:none;
+  width:100%;
+  padding:0.8rem;
+  border-radius:8px;
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  border:none;
+  resize:none;
 }
 .modal-content button{
-  padding:0.6rem 1.2rem;border-radius:10px;background:var(--secondary);color:#fff;font-weight:700;
+  padding:0.6rem 1.2rem;
+  border-radius:10px;
+  background:var(--secondary);
+  color:#fff;
+  font-weight:700;
 }
-.modal-content button:hover{background:var(--primary);transform:scale(1.05);}
-.modal-close{position:absolute;top:0.5rem;right:0.5rem;background:none;font-size:1.5rem;color:#fff;cursor:pointer;}
+.modal-content button:hover{
+  background:var(--primary);
+}
+.modal-close{
+  position:absolute;
+  top:0.5rem;
+  right:0.5rem;
+  font-size:1.5rem;
+  background:none;
+  color:#fff;
+  cursor:pointer;
+}
 
 /* Floating Buttons */
 .float-btns{
-  position:fixed;right:1rem;bottom:1rem;display:flex;flex-direction:column;gap:1rem;z-index:1000;
+  position:fixed;
+  right:1rem;
+  bottom:1rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  z-index:1000;
 }
 .float-btns a{
-  display:flex;align-items:center;justify-content:center;width:60px;height:60px;
-  border-radius:50%;background:var(--secondary);color:#fff;font-size:1.5rem;transition:var(--transition);
+  width:60px;
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:var(--secondary);
+  color:#fff;
+  font-size:1.5rem;
   box-shadow:0 0 15px var(--secondary);
 }
-.float-btns a:hover{background:var(--primary);transform:scale(1.1);box-shadow:0 0 25px var(--primary);}
+.float-btns a:hover{
+  background:var(--primary);
+  transform:scale(1.1);
+}
 
 /* Toast */
 .toast{
-  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);
-  background:var(--primary);color:#000;padding:0.8rem 1.5rem;border-radius:12px;
-  opacity:0;pointer-events:none;transition:0.5s;z-index:3000;font-weight:600;
+  position:fixed;
+  bottom:1rem;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--primary);
+  color:#000;
+  padding:0.8rem 1.5rem;
+  border-radius:12px;
+  opacity:0;
+  transition:0.5s;
+  z-index:3000;
+  font-weight:600;
 }
-.toast.show{opacity:1;pointer-events:auto;}
+.toast.show{opacity:1;}
 </style>
 </head>
+
 <body>
 
 <div id="particles"></div>
@@ -327,86 +465,300 @@ main{padding:2rem;display:flex;flex-direction:column;gap:2rem;align-items:center
 </nav>
 
 <main>
-  <h2 style="color:var(--primary);margin-bottom:1rem;">Layanan Pelanggan</h2>
+  <h2 style="color:var(--primary);">Layanan Pelanggan</h2>
+
   <div class="cs-grid">
-    <div class="cs-card" onclick="openLink('https://wa.me/1234567890?text=Halo%20CS')">
-      <img src="https://img.icons8.com/ios-filled/100/00fff7/administrator-male.png" alt="WhatsApp">
+    <div class="cs-card" onclick="openLink('https://wa.me/1234567890')">
+      <img src="https://img.icons8.com/ios-filled/100/00fff7/administrator-male.png">
       <h3>WhatsApp</h3>
       <p>Chat cepat via WhatsApp</p>
       <button>Mulai Chat</button>
     </div>
+
     <div class="cs-card" onclick="openLink('https://t.me/username')">
-      <img src="https://img.icons8.com/ios-filled/100/ff00d4/telegram-app.png" alt="Telegram">
+      <img src="https://img.icons8.com/ios-filled/100/ff00d4/telegram-app.png">
       <h3>Telegram</h3>
       <p>Kontak langsung via Telegram</p>
       <button>Mulai Chat</button>
     </div>
+
     <div class="cs-card" onclick="openModal()">
-      <img src="https://img.icons8.com/ios-filled/100/00fff7/email.png" alt="Email">
+      <img src="https://img.icons8.com/ios-filled/100/00fff7/email.png">
       <h3>Form Pesan</h3>
-      <p>Kirim pesan langsung melalui form</p>
+      <p>Kirim pesan langsung</p>
       <button>Buka Form</button>
     </div>
   </div>
 </main>
 
-<!-- Modal -->
 <div class="modal" id="cs-modal">
   <div class="modal-content">
-    <span class="modal-close" id="close-modal">&times;</span>
+    <span class="modal-close" onclick="closeModal()">&times;</span>
     <h3>Chat dengan CS</h3>
-    <textarea placeholder="Tulis pesanmu di sini..." rows="5"></textarea>
+    <textarea rows="5" placeholder="Tulis pesanmu..."></textarea>
     <button onclick="sendMessage()">Kirim Pesan</button>
   </div>
 </div>
 
 <div class="float-btns">
-  <a href="https://wa.me/1234567890?text=Halo%20CS" target="_blank" title="WhatsApp">W</a>
-  <a href="https://t.me/username" target="_blank" title="Telegram">T</a>
+  <a href="https://wa.me/1234567890" target="_blank">W</a>
+  <a href="https://t.me/username" target="_blank">T</a>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// Toast
-const toastEl=document.getElementById('toast');
-function showToast(msg){
-  toastEl.textContent=msg;
-  toastEl.classList.add('show');
-  setTimeout(()=>toastEl.classList.remove('show'),3000);
-}
-
-// Modal
+const toast=document.getElementById('toast');
 const modal=document.getElementById('cs-modal');
-document.getElementById('close-modal').addEventListener('click',()=>modal.classList.remove('show'));
-function openModal(){modal.classList.add('show');}
+
+function showToast(msg){
+  toast.textContent=msg;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),3000);
+}
+function openModal(){modal.classList.add('show')}
+function closeModal(){modal.classList.remove('show')}
 function sendMessage(){
-  const textarea=modal.querySelector('textarea');
-  if(textarea.value.trim()===''){showToast('Pesan kosong!'); return;}
-  showToast('Pesan terkirim ke CS!');
-  textarea.value=''; modal.classList.remove('show');
+  const t=modal.querySelector('textarea');
+  if(!t.value.trim()) return showToast("Pesan kosong");
+  showToast("Pesan terkirim");
+  t.value='';
+  closeModal();
 }
+function openLink(url){window.open(url,'_blank')}
 
-// Open link helper
-function openLink(url){window.open(url,'_blank');}
-
-// Particle background
+/* Particles */
 const canvas=document.createElement('canvas');
-canvas.id='particleCanvas';document.getElementById('particles').appendChild(canvas);
-const ctx=canvas.getContext('2d');let w=canvas.width=window.innerWidth,h=canvas.height=window.innerHeight;
-const particles=[];
-for(let i=0;i<80;i++){particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});}
-function animate(){
-  ctx.clearRect(0,0,w,h);
-  particles.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x>w)p.x=0;if(p.x<0)p.x=w;if(p.y>h)p.y=0;if(p.y<0)p.y=h;
-    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(0,255,255,0.3)';ctx.fill();
-  });
-  requestAnimationFrame(animate);
+document.getElementById('particles').appendChild(canvas);
+const ctx=canvas.getContext('2d');
+let w=canvas.width=innerWidth,h=canvas.height=innerHeight;
+const p=[];
+for(let i=0;i<80;i++)p.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4});
+function anim(){
+ ctx.clearRect(0,0,w,h);
+ p.forEach(a=>{
+  a.x+=a.vx;a.y+=a.vy;
+  if(a.x>w)a.x=0;if(a.x<0)a.x=w;
+  if(a.y>h)a.y=0;if(a.y<0)a.y=h;
+  ctx.beginPath();
+  ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+  ctx.fillStyle='rgba(0,255,255,.3)';
+  ctx.fill();
+ });
+ requestAnimationFrame(anim);
 }
-animate();
-window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight;});
+anim();
+addEventListener('resize',()=>{w=canvas.width=innerWidth;h=canvas.height=innerHeight});
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FathirDevZx — Layanan & Fitur</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --neon:#00fff7;
+ --pink:#ff00d4;
+ --gold:#ffaa00;
+ --bg:#050505;
+ --glass:rgba(255,255,255,0.06);
+ --card:rgba(15,15,15,0.85);
+ --blur:blur(14px);
+ --tr:.6s cubic-bezier(.16,1,.3,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{
+ background:radial-gradient(circle at top,#0c0c0c,#000);
+ color:#fff;
+ overflow-x:hidden;
+}
+
+header{
+ text-align:center;
+ padding:4rem 2rem;
+}
+header h1{
+ font-size:2.6rem;
+ background:linear-gradient(90deg,var(--neon),var(--pink));
+ -webkit-background-clip:text;
+ color:transparent;
+}
+header p{
+ max-width:700px;
+ margin:1rem auto;
+ color:#aaa;
+}
+
+.features{
+ max-width:1200px;
+ margin:auto;
+ padding:2rem;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+ gap:2.5rem;
+}
+
+.feature-card{
+ background:var(--card);
+ backdrop-filter:var(--blur);
+ border-radius:24px;
+ padding:2.2rem;
+ position:relative;
+ overflow:hidden;
+ border:1px solid rgba(255,255,255,0.08);
+ transform:translateY(60px);
+ opacity:0;
+ transition:var(--tr);
+}
+
+.feature-card.show{
+ transform:translateY(0);
+ opacity:1;
+}
+
+.feature-card::before{
+ content:'';
+ position:absolute;
+ inset:0;
+ border-radius:24px;
+ box-shadow:0 0 0 transparent;
+ transition:var(--tr);
+}
+
+.feature-card:hover{
+ transform:translateY(-12px) scale(1.03);
+}
+
+.feature-card:hover::before{
+ box-shadow:0 0 45px var(--neon);
+}
+
+.icon{
+ font-size:2.8rem;
+ margin-bottom:1rem;
+ filter:drop-shadow(0 0 12px var(--neon));
+}
+
+.feature-card h3{
+ color:var(--neon);
+ margin-bottom:.8rem;
+ font-size:1.6rem;
+}
+
+.feature-card p{
+ color:#ccc;
+ font-size:.95rem;
+ line-height:1.6;
+}
+
+.tag{
+ display:inline-block;
+ margin-top:1.2rem;
+ padding:.4rem 1rem;
+ border-radius:999px;
+ font-size:.75rem;
+ font-weight:700;
+ background:linear-gradient(135deg,var(--gold),var(--pink));
+ color:#000;
+}
+
+/* Glow background orb */
+.orb{
+ position:fixed;
+ width:400px;height:400px;
+ background:radial-gradient(circle,var(--neon),transparent 70%);
+ filter:blur(120px);
+ opacity:.15;
+ z-index:-1;
+ animation:float 12s infinite alternate ease-in-out;
+}
+.orb.two{
+ background:radial-gradient(circle,var(--pink),transparent 70%);
+ right:0;bottom:0;
+ animation-delay:4s;
+}
+@keyframes float{
+ from{transform:translateY(0)}
+ to{transform:translateY(-120px)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="orb"></div>
+<div class="orb two"></div>
+
+<header>
+ <h1>Layanan FathirDevZx</h1>
+ <p>Solusi digital modern untuk website, server, dan keamanan online dengan standar premium.</p>
+</header>
+
+<section class="features">
+
+ <div class="feature-card">
+  <div class="icon">💻</div>
+  <h3>Website Non-Hosting</h3>
+  <p>
+   Cocok untuk developer atau klien yang sudah punya server sendiri.
+   Kamu akan mendapatkan source code full, desain modern, responsif,
+   dan mudah dikembangkan ke level lebih tinggi.
+  </p>
+  <span class="tag">Flexible & Developer Ready</span>
+ </div>
+
+ <div class="feature-card">
+  <div class="icon">🌐</div>
+  <h3>Website + Hosting</h3>
+  <p>
+   Website langsung online tanpa ribet.
+   Sudah termasuk setup hosting, konfigurasi dasar,
+   optimasi kecepatan, dan support awal agar website stabil.
+  </p>
+  <span class="tag">Siap Online</span>
+ </div>
+
+ <div class="feature-card">
+  <div class="icon">🔒</div>
+  <h3>VPN Service</h3>
+  <p>
+   Layanan VPN aman untuk privasi dan keamanan data.
+   Cocok untuk akses aman, testing server,
+   atau kebutuhan jaringan profesional.
+  </p>
+  <span class="tag">Secure Network</span>
+ </div>
+
+ <div class="feature-card">
+  <div class="icon">🌍</div>
+  <h3>Domain</h3>
+  <p>
+   Penyediaan dan setup domain profesional.
+   Mulai dari domain bisnis, personal brand,
+   hingga konfigurasi DNS dan integrasi ke hosting.
+  </p>
+  <span class="tag">Professional Identity</span>
+ </div>
+
+</section>
+
+<script>
+/* reveal animation */
+const cards=document.querySelectorAll('.feature-card');
+const obs=new IntersectionObserver(e=>{
+ e.forEach(x=>{
+  if(x.isIntersecting)x.target.classList.add('show');
+ });
+},{threshold:.2});
+cards.forEach(c=>obs.observe(c));
 </script>
 
 </body>
