@@ -6,265 +6,208 @@
 <title>FathirDevZx - Blox Fruits Shop</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #0ff;
-    --secondary: #ff00ff;
-    --bg: #0a0a0a;
-    --card-bg: rgba(20,20,20,0.85);
-    --glass: rgba(255,255,255,0.05);
-    --transition: 0.3s ease;
-  }
+:root{
+  --primary:#00fff7;
+  --secondary:#ff00d4;
+  --accent:#ffaa00;
+  --bg:#0a0a0a;
+  --card-bg:rgba(20,20,20,0.85);
+  --glass:rgba(255,255,255,0.05);
+  --transition:0.4s ease;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:var(--bg);color:#fff;overflow-x:hidden;}
+button{cursor:pointer;border:none;outline:none;font-weight:600;}
 
-  * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
-  body {background: var(--bg); color:#fff; overflow-x:hidden;}
-  a {text-decoration:none; color:inherit;}
-  button {cursor:pointer; border:none; outline:none;}
-  
-  /* Navbar */
-  nav {
-    display:flex; justify-content:space-between; align-items:center;
-    padding:1rem 2rem; backdrop-filter:blur(10px); background:var(--glass);
-    position:sticky; top:0; z-index:1000;
-  }
-  nav h1 {color:var(--primary);}
-  nav .auth-btns button {margin-left:1rem; padding:0.5rem 1rem; background:var(--secondary); border-radius:6px; color:#fff; transition:var(--transition);}
-  nav .auth-btns button:hover {background:var(--primary);}
+/* Navbar */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 2rem;backdrop-filter:blur(12px);background:var(--glass);
+  position:sticky;top:0;z-index:1000;box-shadow:0 0 25px rgba(0,255,255,0.3);
+}
+nav h1{color:var(--primary);letter-spacing:1px;font-size:1.5rem;}
+nav .cart-btn{padding:0.5rem 1rem;background:var(--secondary);border-radius:8px;transition:var(--transition);}
+nav .cart-btn:hover{background:var(--primary);transform:scale(1.05);}
 
-  /* Main container */
-  main {padding:2rem;}
-  
-  /* Shop grid */
-  .shop-grid {
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.5rem;
-  }
+/* Main container */
+main{padding:2rem;display:flex;flex-direction:column;gap:2rem;align-items:center;}
 
-  .card {
-    background: var(--card-bg); border-radius:12px; padding:1rem; backdrop-filter:blur(10px);
-    transition:var(--transition); position:relative;
-  }
-  .card:hover {transform:translateY(-5px);}
-  .card img {width:100%; border-radius:10px;}
-  .card h3 {margin:0.5rem 0;}
-  .card .price {color:var(--primary); font-weight:600;}
-  .card button {
-    margin-top:0.5rem; width:100%; padding:0.5rem; background:var(--secondary);
-    border-radius:6px; transition:var(--transition);
-  }
-  .card button:hover {background:var(--primary);}
+/* Shop grid */
+.shop-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;width:100%;
+}
+.card{
+  background:var(--card-bg);border-radius:16px;padding:1rem;backdrop-filter:blur(12px);
+  transition:var(--transition);position:relative;overflow:hidden;
+}
+.card:hover{transform:translateY(-10px);box-shadow:0 0 25px var(--primary);}
+.card img{width:100%;border-radius:12px;filter:drop-shadow(0 0 10px var(--primary));transition:0.4s;}
+.card:hover img{transform:scale(1.05);}
+.card h3{margin:0.5rem 0;color:var(--primary);}
+.card .price{color:var(--secondary);font-weight:700;font-size:1.1rem;}
+.card button{
+  margin-top:0.5rem;width:100%;padding:0.6rem;background:var(--secondary);
+  border-radius:10px;transition:var(--transition);font-weight:700;
+}
+.card button:hover{background:var(--primary);transform:scale(1.05);}
 
-  /* Cart */
-  .cart {
-    position:fixed; right:1rem; top:5rem; background:var(--card-bg); padding:1rem; border-radius:12px;
-    width:250px; max-height:70vh; overflow-y:auto;
-  }
-  .cart h3 {margin-bottom:1rem;}
-  .cart-item {display:flex; justify-content:space-between; margin-bottom:0.5rem;}
-  .cart-item button {background:red; color:#fff; border-radius:4px; padding:0 0.3rem;}
+/* Badge */
+.badge{
+  position:absolute;top:0.5rem;left:0.5rem;padding:0.3rem 0.7rem;border-radius:6px;font-size:0.8rem;font-weight:700;
+  color:#fff;background:var(--accent);text-transform:uppercase;letter-spacing:0.5px;
+}
 
-  /* Customer service */
-  .cs {
-    margin-top:2rem; padding:1rem; background:var(--glass); border-radius:12px; backdrop-filter:blur(10px);
-  }
-  .cs button {margin-right:1rem; background:var(--secondary); padding:0.5rem 1rem; border-radius:6px; transition:var(--transition);}
-  .cs button:hover {background:var(--primary);}
-  
-  /* Toast */
-  .toast {
-    position:fixed; bottom:1rem; right:1rem; background:var(--primary); color:#000; padding:0.8rem 1rem; border-radius:6px;
-    opacity:0; pointer-events:none; transition:0.5s;
-  }
-  .toast.show {opacity:1; pointer-events:auto;}
-  
-  /* Loading */
-  .loading {
-    position:fixed; inset:0; display:flex; justify-content:center; align-items:center;
-    background:rgba(0,0,0,0.7); z-index:2000; color:var(--primary); font-size:1.5rem; display:none;
-  }
+/* Cart */
+.cart{
+  position:fixed;right:1rem;top:5rem;background:var(--card-bg);
+  padding:1rem;border-radius:18px;width:300px;max-height:70vh;overflow-y:auto;
+  backdrop-filter:blur(12px);display:none;box-shadow:0 0 25px var(--primary);
+}
+.cart h3{margin-bottom:1rem;color:var(--primary);}
+.cart-item{display:flex;justify-content:space-between;margin-bottom:0.5rem;align-items:center;}
+.cart-item input{width:50px;background:rgba(255,255,255,0.05);border:none;color:#fff;padding:0.2rem 0.5rem;border-radius:6px;text-align:center;}
+.cart-item button{background:red;color:#fff;border-radius:6px;padding:0 0.4rem;transition:0.3s;}
+.cart-item button:hover{transform:scale(1.1);}
 
-  /* Profile & Admin toggle (UI only) */
-  .profile, .admin-toggle {margin-top:2rem; background:var(--glass); padding:1rem; border-radius:12px; backdrop-filter:blur(10px);}
-  .profile h3, .admin-toggle h3 {margin-bottom:1rem;}
-  .admin-toggle button {padding:0.5rem 1rem; background:var(--secondary); border-radius:6px; transition:var(--transition);}
-  .admin-toggle button:hover {background:var(--primary);}
+/* Discount input */
+#discount-code{width:100%;padding:0.5rem;margin:0.5rem 0;border-radius:6px;border:none;background:rgba(255,255,255,0.05);color:#fff;}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);
+  background:var(--primary);color:#000;padding:0.8rem 1.5rem;border-radius:12px;
+  opacity:0;pointer-events:none;transition:0.5s;z-index:3000;font-weight:600;
+}
+.toast.show{opacity:1;pointer-events:auto;}
+
+/* Loading */
+.loading{
+  position:fixed;inset:0;display:flex;justify-content:center;align-items:center;
+  background:rgba(0,0,0,0.7);z-index:2000;color:var(--primary);font-size:1.5rem;display:none;
+}
 </style>
 </head>
 <body>
 
 <nav>
   <h1>FathirDevZx</h1>
-  <div class="auth-btns">
-    <button id="login-google">Login Google</button>
-    <button id="login-phone">Login HP</button>
-    <button id="logout" style="display:none;">Logout</button>
-  </div>
+  <button class="cart-btn" id="cart-btn">Keranjang</button>
 </nav>
 
 <div class="loading" id="loading">Loading...</div>
 
 <main>
+  <h2 style="color:var(--primary);margin-bottom:1rem;">Shop Blox Fruits</h2>
   <div class="shop-grid" id="shop-grid"></div>
-
-  <div class="cart" id="cart" style="display:none;">
-    <h3>Keranjang</h3>
-    <div id="cart-items"></div>
-    <p>Total: <span id="cart-total">0</span> Robux</p>
-    <button id="checkout">Bayar via DANA</button>
-  </div>
-
-  <div class="cs">
-    <h3>Customer Service</h3>
-    <button onclick="window.open('https://wa.me/1234567890?text=Halo%20CS')">WhatsApp</button>
-    <button onclick="window.open('https://t.me/username')">Telegram</button>
-    <p>Jam operasional: 09:00 - 21:00</p>
-  </div>
-
-  <div class="profile" id="profile" style="display:none;">
-    <h3>Profil User</h3>
-    <p id="user-info"></p>
-  </div>
-
-  <div class="admin-toggle" id="admin-toggle" style="display:none;">
-    <h3>Mode Admin</h3>
-    <button id="toggle-admin">Aktifkan Mode Admin</button>
-  </div>
 </main>
+
+<div class="cart" id="cart">
+  <h3>Keranjang</h3>
+  <div id="cart-items"></div>
+  <input type="text" id="discount-code" placeholder="Kode Diskon: ftrcode11 (selamanya)">
+  <p>Total: Rp <span id="cart-total">0</span></p>
+  <button id="apply-discount">Gunakan Diskon</button>
+  <button id="checkout">Bayar via DANA</button>
+</div>
 
 <div class="toast" id="toast"></div>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script>
-  // FIREBASE CONFIGURATION
-  const firebaseConfig = {
-    apiKey: "GANTI_API_KEY",
-    authDomain: "GANTI_PROJECT.firebaseapp.com",
-    projectId: "GANTI_PROJECT",
-    storageBucket: "GANTI_PROJECT.appspot.com",
-    messagingSenderId: "GANTI_SENDER_ID",
-    appId: "GANTI_APP_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
+const shopItems=[
+  {id:1,name:"Leopard",price:70000,img:"https://www.roblox.com/asset/?id=12345",badge:"Hot"},
+  {id:2,name:"Dough",price:50000,img:"https://www.roblox.com/asset/?id=23456",badge:"Popular"},
+  {id:3,name:"Dragon",price:150000,img:"https://www.roblox.com/asset/?id=34567",badge:"Limited"},
+  {id:4,name:"Game Pass",price:30000,img:"https://www.roblox.com/asset/?id=45678",badge:"Hot"}
+];
 
-  const shopItems = [
-    {id:1, name:"Leopard", price:500, img:"https://www.roblox.com/asset/?id=12345"},
-    {id:2, name:"Dough", price:400, img:"https://www.roblox.com/asset/?id=23456"},
-    {id:3, name:"Dragon", price:1000, img:"https://www.roblox.com/asset/?id=34567"},
-    {id:4, name:"Game Pass", price:200, img:"https://www.roblox.com/asset/?id=45678"}
-  ];
+let cart=[];
+let discountApplied=false;
+const shopGrid=document.getElementById('shop-grid');
+const cartEl=document.getElementById('cart');
+const cartItemsEl=document.getElementById('cart-items');
+const cartTotalEl=document.getElementById('cart-total');
+const toastEl=document.getElementById('toast');
+const discountInput=document.getElementById('discount-code');
+const loadingEl=document.getElementById('loading');
 
-  let cart = [];
-  const shopGrid = document.getElementById('shop-grid');
-  const cartEl = document.getElementById('cart');
-  const cartItemsEl = document.getElementById('cart-items');
-  const cartTotalEl = document.getElementById('cart-total');
-  const toastEl = document.getElementById('toast');
-  const loadingEl = document.getElementById('loading');
-  const profileEl = document.getElementById('profile');
-  const userInfoEl = document.getElementById('user-info');
-  const adminToggleEl = document.getElementById('admin-toggle');
+function showToast(msg){
+  toastEl.textContent=msg;
+  toastEl.classList.add('show');
+  setTimeout(()=>toastEl.classList.remove('show'),3000);
+}
 
-  function showToast(msg){
-    toastEl.textContent = msg;
-    toastEl.classList.add('show');
-    setTimeout(()=>toastEl.classList.remove('show'),3000);
-  }
-
-  function updateCart(){
-    if(cart.length===0) {cartEl.style.display='none'; return;}
-    cartEl.style.display='block';
-    cartItemsEl.innerHTML='';
-    let total=0;
-    cart.forEach(item=>{
-      total+=item.price;
-      const div=document.createElement('div');
-      div.className='cart-item';
-      div.innerHTML=`<span>${item.name} - ${item.price}</span><button onclick="removeFromCart(${item.id})">X</button>`;
-      cartItemsEl.appendChild(div);
-    });
-    cartTotalEl.textContent=total;
-  }
-
-  function addToCart(id){
-    const item = shopItems.find(i=>i.id===id);
-    if(item){cart.push(item); updateCart(); showToast(`${item.name} ditambahkan ke keranjang`);}
-  }
-
-  function removeFromCart(id){
-    cart = cart.filter(i=>i.id!==id); updateCart();
-  }
-
-  function renderShop(){
-    shopGrid.innerHTML='';
-    shopItems.forEach(item=>{
-      const card = document.createElement('div');
-      card.className='card';
-      card.innerHTML=`
-        <img src="${item.img}" alt="${item.name}">
-        <h3>${item.name}</h3>
-        <p class="price">${item.price} Robux</p>
-        <button onclick="addToCart(${item.id})">Tambahkan ke Keranjang</button>
-      `;
-      shopGrid.appendChild(card);
-    });
-  }
-
-  document.getElementById('checkout').addEventListener('click',()=>{
-    if(cart.length===0){showToast('Keranjang kosong'); return;}
-    const total=cart.reduce((sum,i)=>sum+i.price,0);
-    window.open(`https://link.dana.id/transfer?amount=${total}`,'_blank');
+function renderShop(){
+  shopGrid.innerHTML='';
+  shopItems.forEach(item=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <div class="badge">${item.badge}</div>
+      <img src="${item.img}" alt="${item.name}">
+      <h3>${item.name}</h3>
+      <p class="price">Rp ${item.price.toLocaleString()}</p>
+      <button onclick="addToCart(${item.id})">Tambahkan ke Keranjang</button>
+    `;
+    shopGrid.appendChild(card);
   });
+}
 
-  // AUTH
-  const loginGoogleBtn = document.getElementById('login-google');
-  const loginPhoneBtn = document.getElementById('login-phone');
-  const logoutBtn = document.getElementById('logout');
-
-  loginGoogleBtn.addEventListener('click',()=>{
-    const provider = new firebase.auth.GoogleAuthProvider();
-    loadingEl.style.display='flex';
-    auth.signInWithPopup(provider).then(res=>{
-      loadingEl.style.display='none';
-      showToast('Login berhasil');
-    }).catch(err=>{loadingEl.style.display='none'; showToast(err.message);});
+function updateCart(){
+  if(cart.length===0){cartEl.style.display='none'; return;}
+  cartEl.style.display='block';
+  cartItemsEl.innerHTML='';
+  let total=0;
+  cart.forEach(item=>{
+    total+=item.price*item.qty;
+    const div=document.createElement('div');
+    div.className='cart-item';
+    div.innerHTML=`<span>${item.name} - Rp ${item.price.toLocaleString()} x </span><input type="number" min="1" value="${item.qty}" onchange="updateQty(${item.id},this.value)"><button onclick="removeFromCart(${item.id})">X</button>`;
+    cartItemsEl.appendChild(div);
   });
+  if(discountApplied) total=Math.round(total*0.8);
+  cartTotalEl.textContent=total.toLocaleString();
+}
 
-  loginPhoneBtn.addEventListener('click',async()=>{
-    const phone = prompt("Masukkan nomor HP (+62...)");
-    if(!phone) return;
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('login-phone',{size:'invisible'});
-    loadingEl.style.display='flex';
-    auth.signInWithPhoneNumber(phone, window.recaptchaVerifier)
-      .then(confirmationResult=>{
-        loadingEl.style.display='none';
-        const code = prompt('Masukkan kode OTP');
-        return confirmationResult.confirm(code);
-      })
-      .then(res=>{showToast('Login berhasil');})
-      .catch(err=>{loadingEl.style.display='none'; showToast(err.message);});
-  });
+function addToCart(id){
+  const item=shopItems.find(i=>i.id===id);
+  if(item){
+    const existing=cart.find(i=>i.id===id);
+    if(existing){existing.qty++;}
+    else {cart.push({...item,qty:1});}
+    updateCart();
+    showToast(`${item.name} ditambahkan`);
+  }
+}
 
-  logoutBtn.addEventListener('click',()=>{auth.signOut(); showToast('Logout berhasil');});
+function updateQty(id,value){
+  const item=cart.find(i=>i.id===id);
+  if(item){item.qty=Math.max(1,parseInt(value));updateCart();}
+}
 
-  auth.onAuthStateChanged(user=>{
-    if(user){
-      loginGoogleBtn.style.display='none';
-      loginPhoneBtn.style.display='none';
-      logoutBtn.style.display='inline-block';
-      profileEl.style.display='block';
-      adminToggleEl.style.display='block';
-      userInfoEl.textContent = `Nama: ${user.displayName || user.phoneNumber || 'User'}\nEmail: ${user.email || '-'}`;
-      renderShop();
-    } else {
-      loginGoogleBtn.style.display='inline-block';
-      loginPhoneBtn.style.display='inline-block';
-      logoutBtn.style.display='none';
-      profileEl.style.display='none';
-      adminToggleEl.style.display='none';
-      shopGrid.innerHTML='';
-      cartEl.style.display='none';
-    }
-  });
+function removeFromCart(id){
+  cart=cart.filter(i=>i.id!==id);updateCart();
+}
+
+document.getElementById('checkout').addEventListener('click',()=>{
+  if(cart.length===0){showToast('Keranjang kosong');return;}
+  const total=cart.reduce((sum,i)=>sum+i.price*i.qty,0);
+  const final=discountApplied?Math.round(total*0.8):total;
+  window.open(`https://link.dana.id/transfer?amount=${final}`,'_blank');
+});
+
+document.getElementById('apply-discount').addEventListener('click',()=>{
+  if(discountInput.value.trim().toLowerCase()==='ftrcode11'){
+    discountApplied=true;
+    updateCart();
+    showToast('Diskon 20% diterapkan!');
+  }else{showToast('Kode diskon salah');}
+});
+
+document.getElementById('cart-btn').addEventListener('click',()=>cartEl.style.display=(cartEl.style.display==='block')?'none':'block');
+
+function simulateLoading(){loadingEl.style.display='flex';setTimeout(()=>loadingEl.style.display='none',800);}
+simulateLoading();
+renderShop();
 </script>
 
 </body>
@@ -278,128 +221,136 @@
 <title>FathirDevZx - Customer Service</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary: #00fff7;
-  --secondary: #ff00d4;
-  --bg: #0a0a0a;
-  --card-bg: rgba(20,20,20,0.8);
-  --glass: rgba(255,255,255,0.05);
-  --transition: 0.4s ease;
+:root{
+  --primary:#00fff7;
+  --secondary:#ff00d4;
+  --accent:#ffaa00;
+  --bg:#0a0a0a;
+  --card-bg:rgba(20,20,20,0.85);
+  --glass:rgba(255,255,255,0.05);
+  --transition:0.4s ease;
 }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:var(--bg);color:#fff;overflow-x:hidden;position:relative;}
+button{cursor:pointer;border:none;outline:none;font-weight:600;transition:var(--transition);}
 
-* {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
-body {background: var(--bg); color:#fff; overflow-x:hidden;}
-a {text-decoration:none; color:inherit;}
-button {cursor:pointer; border:none; outline:none; font-weight:600;}
+/* Background particles */
+#particles{
+  position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 /* Navbar */
-nav {
-  display:flex; justify-content:space-between; align-items:center;
-  padding:1rem 2rem; backdrop-filter:blur(10px); background:var(--glass);
-  position:sticky; top:0; z-index:1000; box-shadow:0 0 15px rgba(0,255,255,0.3);
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 2rem;backdrop-filter:blur(12px);background:var(--glass);
+  position:sticky;top:0;z-index:1000;box-shadow:0 0 25px rgba(0,255,255,0.3);
 }
-nav h1 {color:var(--primary);}
-nav .menu-btn {padding:0.5rem 1rem; background:var(--secondary); border-radius:8px; transition:var(--transition);}
-nav .menu-btn:hover {background:var(--primary); transform:scale(1.05);}
+nav h1{color:var(--primary);letter-spacing:1px;font-size:1.5rem;}
 
-/* Main container */
-main {padding:2rem; display:flex; flex-direction:column; align-items:center; gap:2rem;}
-
-/* CS Cards */
-.cs-grid {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; width:100%;
+/* CS Grid */
+main{padding:2rem;display:flex;flex-direction:column;gap:2rem;align-items:center;position:relative;z-index:1;}
+.cs-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;width:100%;
 }
-.cs-card {
+.cs-card{
   background: var(--card-bg); border-radius:16px; padding:2rem; backdrop-filter:blur(12px);
-  display:flex; flex-direction:column; align-items:center; text-align:center;
-  transition: var(--transition); border:2px solid transparent;
+  display:flex; flex-direction:column; align-items:center; text-align:center; transition: var(--transition);
+  border:2px solid transparent; cursor:pointer;
 }
-.cs-card:hover {transform:translateY(-8px); border-color:var(--primary); box-shadow:0 0 20px var(--primary);}
-.cs-card img {width:80px; margin-bottom:1rem; filter:drop-shadow(0 0 5px var(--primary));}
-.cs-card h3 {margin-bottom:0.5rem; color:var(--primary);}
-.cs-card p {margin-bottom:1rem; color:#ccc;}
-.cs-card button {
-  padding:0.6rem 1.2rem; border-radius:8px; background:var(--secondary);
-  color:#fff; transition: var(--transition);
+.cs-card:hover{
+  transform:translateY(-10px);
+  border-color:var(--primary);
+  box-shadow:0 0 30px var(--primary);
 }
-.cs-card button:hover {background:var(--primary); transform:scale(1.05);}
+.cs-card img{width:80px;margin-bottom:1rem;filter:drop-shadow(0 0 10px var(--primary));transition:0.4s;}
+.cs-card:hover img{transform:scale(1.1);}
+.cs-card h3{margin-bottom:0.5rem;color:var(--primary);}
+.cs-card p{margin-bottom:1rem;color:#ccc;}
+.cs-card button{
+  padding:0.6rem 1.2rem;border-radius:10px;background:var(--secondary);
+  color:#fff;font-weight:700;transition:var(--transition);
+}
+.cs-card button:hover{background:var(--primary);transform:scale(1.1);box-shadow:0 0 15px var(--primary);}
 
 /* Modal Chat */
-.modal {
-  position:fixed; inset:0; display:flex; justify-content:center; align-items:center;
-  background:rgba(0,0,0,0.8); backdrop-filter:blur(5px); opacity:0; pointer-events:none; transition:0.3s;
+.modal{
+  position:fixed;inset:0;display:flex;justify-content:center;align-items:center;
+  background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);opacity:0;pointer-events:none;transition:0.4s;
+  z-index:2000;
 }
-.modal.show {opacity:1; pointer-events:auto;}
-.modal-content {
-  background:var(--card-bg); border-radius:16px; width:90%; max-width:400px;
-  padding:2rem; display:flex; flex-direction:column; gap:1rem; position:relative;
+.modal.show{opacity:1;pointer-events:auto;}
+.modal-content{
+  background:var(--card-bg);border-radius:16px;width:90%;max-width:400px;
+  padding:2rem;display:flex;flex-direction:column;gap:1rem;position:relative;
+  animation:modalIn 0.4s ease forwards;
 }
-.modal-content h3 {color:var(--primary);}
-.modal-content textarea {width:100%; padding:0.8rem; border-radius:8px; background:rgba(255,255,255,0.05); color:#fff; border:none; resize:none;}
-.modal-content button {padding:0.6rem 1.2rem; border-radius:8px; background:var(--secondary); color:#fff; transition:var(--transition);}
-.modal-content button:hover {background:var(--primary); transform:scale(1.05);}
-.modal-close {
-  position:absolute; top:0.5rem; right:0.5rem; background:none; font-size:1.5rem; color:#fff; cursor:pointer;
+@keyframes modalIn{
+  0%{transform:translateY(-50px);opacity:0;}
+  100%{transform:translateY(0);opacity:1;}
 }
+.modal-content h3{color:var(--primary);}
+.modal-content textarea{
+  width:100%;padding:0.8rem;border-radius:8px;background:rgba(255,255,255,0.05);
+  color:#fff;border:none;resize:none;
+}
+.modal-content button{
+  padding:0.6rem 1.2rem;border-radius:10px;background:var(--secondary);color:#fff;font-weight:700;
+}
+.modal-content button:hover{background:var(--primary);transform:scale(1.05);}
+.modal-close{position:absolute;top:0.5rem;right:0.5rem;background:none;font-size:1.5rem;color:#fff;cursor:pointer;}
 
-/* Floating WhatsApp/Telegram */
-.float-btns {
-  position:fixed; right:1rem; bottom:1rem; display:flex; flex-direction:column; gap:1rem; z-index:1000;
+/* Floating Buttons */
+.float-btns{
+  position:fixed;right:1rem;bottom:1rem;display:flex;flex-direction:column;gap:1rem;z-index:1000;
 }
-.float-btns a {
-  display:flex; align-items:center; justify-content:center; width:60px; height:60px;
-  border-radius:50%; background:var(--secondary); color:#fff; font-size:1.5rem;
-  transition:var(--transition); box-shadow:0 0 10px var(--secondary);
+.float-btns a{
+  display:flex;align-items:center;justify-content:center;width:60px;height:60px;
+  border-radius:50%;background:var(--secondary);color:#fff;font-size:1.5rem;transition:var(--transition);
+  box-shadow:0 0 15px var(--secondary);
 }
-.float-btns a:hover {background:var(--primary); transform:scale(1.1); box-shadow:0 0 20px var(--primary);}
+.float-btns a:hover{background:var(--primary);transform:scale(1.1);box-shadow:0 0 25px var(--primary);}
 
 /* Toast */
-.toast {
-  position:fixed; bottom:1rem; left:50%; transform:translateX(-50%);
-  background:var(--primary); color:#000; padding:0.8rem 1.5rem; border-radius:8px;
-  opacity:0; pointer-events:none; transition:0.5s;
+.toast{
+  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);
+  background:var(--primary);color:#000;padding:0.8rem 1.5rem;border-radius:12px;
+  opacity:0;pointer-events:none;transition:0.5s;z-index:3000;font-weight:600;
 }
-.toast.show {opacity:1; pointer-events:auto;}
-
-/* Loading */
-.loading {
-  position:fixed; inset:0; display:flex; justify-content:center; align-items:center;
-  background:rgba(0,0,0,0.7); z-index:2000; color:var(--primary); font-size:1.5rem; display:none;
-}
+.toast.show{opacity:1;pointer-events:auto;}
 </style>
 </head>
 <body>
 
+<div id="particles"></div>
+
 <nav>
-  <h1>FathirDevZx CS</h1>
-  <button class="menu-btn" id="open-cs">Hubungi CS</button>
+  <h1>FathirDevZx - Customer Service</h1>
 </nav>
 
-<div class="loading" id="loading">Loading...</div>
-
 <main>
+  <h2 style="color:var(--primary);margin-bottom:1rem;">Layanan Pelanggan</h2>
   <div class="cs-grid">
-    <div class="cs-card">
-      <img src="https://img.icons8.com/ios-filled/100/00fff7/administrator-male.png" alt="CS1">
-      <h3>CS WhatsApp</h3>
-      <p>Chat cepat via WhatsApp, 24/7</p>
-      <button onclick="openLink('https://wa.me/1234567890?text=Halo%20CS')">Mulai Chat</button>
+    <div class="cs-card" onclick="openLink('https://wa.me/1234567890?text=Halo%20CS')">
+      <img src="https://img.icons8.com/ios-filled/100/00fff7/administrator-male.png" alt="WhatsApp">
+      <h3>WhatsApp</h3>
+      <p>Chat cepat via WhatsApp</p>
+      <button>Mulai Chat</button>
     </div>
-    <div class="cs-card">
-      <img src="https://img.icons8.com/ios-filled/100/ff00d4/telegram-app.png" alt="CS2">
-      <h3>CS Telegram</h3>
+    <div class="cs-card" onclick="openLink('https://t.me/username')">
+      <img src="https://img.icons8.com/ios-filled/100/ff00d4/telegram-app.png" alt="Telegram">
+      <h3>Telegram</h3>
       <p>Kontak langsung via Telegram</p>
-      <button onclick="openLink('https://t.me/username')">Mulai Chat</button>
+      <button>Mulai Chat</button>
     </div>
-    <div class="cs-card">
-      <img src="https://img.icons8.com/ios-filled/100/00fff7/email.png" alt="CS3">
-      <h3>Email Support</h3>
-      <p>Kirim pertanyaan ke email resmi kami</p>
-      <button onclick="openLink('mailto:support@fathirdevzx.com')">Kirim Email</button>
+    <div class="cs-card" onclick="openModal()">
+      <img src="https://img.icons8.com/ios-filled/100/00fff7/email.png" alt="Email">
+      <h3>Form Pesan</h3>
+      <p>Kirim pesan langsung melalui form</p>
+      <button>Buka Form</button>
     </div>
   </div>
 </main>
 
+<!-- Modal -->
 <div class="modal" id="cs-modal">
   <div class="modal-content">
     <span class="modal-close" id="close-modal">&times;</span>
@@ -417,34 +368,45 @@ main {padding:2rem; display:flex; flex-direction:column; align-items:center; gap
 <div class="toast" id="toast"></div>
 
 <script>
+// Toast
+const toastEl=document.getElementById('toast');
 function showToast(msg){
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'),3000);
+  toastEl.textContent=msg;
+  toastEl.classList.add('show');
+  setTimeout(()=>toastEl.classList.remove('show'),3000);
 }
 
-function openLink(url){ window.open(url,'_blank'); }
-
-const modal = document.getElementById('cs-modal');
-document.getElementById('open-cs').addEventListener('click',()=>modal.classList.add('show'));
+// Modal
+const modal=document.getElementById('cs-modal');
 document.getElementById('close-modal').addEventListener('click',()=>modal.classList.remove('show'));
-
+function openModal(){modal.classList.add('show');}
 function sendMessage(){
-  const textarea = modal.querySelector('textarea');
-  if(textarea.value.trim()===''){ showToast('Pesan kosong!'); return; }
-  showToast('Pesan terkirim ke CS');
-  textarea.value='';
-  modal.classList.remove('show');
+  const textarea=modal.querySelector('textarea');
+  if(textarea.value.trim()===''){showToast('Pesan kosong!'); return;}
+  showToast('Pesan terkirim ke CS!');
+  textarea.value=''; modal.classList.remove('show');
 }
 
-// Loading simulation
-function simulateLoading(){
-  const loading = document.getElementById('loading');
-  loading.style.display='flex';
-  setTimeout(()=>loading.style.display='none',1000);
+// Open link helper
+function openLink(url){window.open(url,'_blank');}
+
+// Particle background
+const canvas=document.createElement('canvas');
+canvas.id='particleCanvas';document.getElementById('particles').appendChild(canvas);
+const ctx=canvas.getContext('2d');let w=canvas.width=window.innerWidth,h=canvas.height=window.innerHeight;
+const particles=[];
+for(let i=0;i<80;i++){particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});}
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x>w)p.x=0;if(p.x<0)p.x=w;if(p.y>h)p.y=0;if(p.y<0)p.y=h;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(0,255,255,0.3)';ctx.fill();
+  });
+  requestAnimationFrame(animate);
 }
-simulateLoading();
+animate();
+window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight;});
 </script>
 
 </body>
