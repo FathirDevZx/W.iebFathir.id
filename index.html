@@ -142,6 +142,253 @@ main{max-width:1200px;margin:auto;padding:4rem 2rem}
 <div class="toast" id="toast"></div>
 
 <script>
+
+
+let cart=[];
+const grid=document.getElementById('grid');
+const cartBox=document.getElementById('cart');
+const items=document.getElementById('items');
+const totalEl=document.getElementById('total');
+const toast=document.getElementById('toast');
+
+function toastShow(t){
+ toast.textContent=t;
+ toast.classList.add('show');
+ setTimeout(()=>toast.classList.remove('show'),2500);
+}
+const services=[
+{
+ id:1,
+ name:"Murid Web AI",
+ price:23000,
+ badge:"Basic",
+ list:[
+  "Source code lengkap",
+  "Belajar bikin web dari nol",
+  "Akses materi internal",
+ 
+  "❌ DILARANG membuka  murid",
+  "❌ DILARANG menjual ulang materi",
+  "⚠️ Jika ketahuan melanggar:",
+  "⚠️ Dikeluarkan dari grup permanen",
+  "⚠️ Hukuman berat tanpa refund"
+ ]
+},
+{
+ id:2,
+ name:"Web AI Owner",
+ price:30000,
+ badge:"Recommended",
+ list:[
+  "Hak admin grup",
+  "Boleh mengelola murid",
+  "Boleh membuka murid",
+  
+  "❌ DILARANG membuka murid di luar grup ini",
+  "⚠️ Pelanggaran = hak owner dicabut"
+ ]
+}
+];
+services.forEach(s=>{
+ grid.innerHTML+=`
+ <div class="card">
+  <span class="badge">${s.badge}</span>
+  <h3>${s.name}</h3>
+  <ul>${s.list.map(l=>`<li>✔ ${l}</li>`).join('')}</ul>
+  <div class="price">Rp ${s.price.toLocaleString('id-ID')}</div>
+  <button onclick="addItem(${s.id})">Tambah ke Keranjang</button>
+ </div>`;
+});
+
+function addItem(id){
+ const s=services.find(x=>x.id===id);
+ const e=cart.find(x=>x.id===id);
+ e ? e.qty++ : cart.push({...s,qty:1});
+ renderCart();
+ toastShow("Ditambahkan ke keranjang");
+}
+
+function renderCart(){
+ if(!cart.length){cartBox.style.display='none';return}
+ cartBox.style.display='block';
+ items.innerHTML='';
+ let total=0;
+ cart.forEach(i=>{
+  total+=i.price*i.qty;
+  items.innerHTML+=`
+   <div class="cart-item">
+    <span>${i.name}</span>
+    <input type="number" min="1" value="${i.qty}"
+     onchange="updateQty(${i.id},this.value)">
+   </div>`;
+ });
+ totalEl.textContent=total.toLocaleString('id-ID');
+}
+
+function updateQty(id,v){
+ const i=cart.find(x=>x.id===id);
+ i.qty=Math.max(1,parseInt(v)||1);
+ renderCart();
+}
+
+function toggleCart(){
+ cartBox.style.display =
+ cartBox.style.display==='block'?'none':'block';
+}
+
+function checkout(){
+ if(!cart.length) return toastShow("Keranjang masih kosong");
+ toastShow("Menuju WhatsApp...");
+}
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FathirDevZx — Web Development Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --neon:#00fff7;
+ --pink:#ff00d4;
+ --gold:#ffaa00;
+ --bg:#070707;
+ --glass:rgba(255,255,255,0.06);
+ --card:rgba(15,15,15,0.9);
+ --blur:blur(14px);
+ --tr:0.45s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:radial-gradient(circle at top,#0f0f0f,#000);color:#fff}
+
+nav{
+ position:sticky;top:0;z-index:1000;
+ display:flex;justify-content:space-between;align-items:center;
+ padding:1.2rem 2.5rem;
+ background:var(--glass);
+ backdrop-filter:var(--blur);
+ border-bottom:1px solid rgba(255,255,255,0.08);
+}
+nav h1{color:var(--neon);font-size:1.6rem}
+nav button{
+ background:linear-gradient(135deg,var(--pink),var(--neon));
+ padding:.6rem 1.3rem;border-radius:10px;
+ font-weight:700;color:#000
+}
+
+main{max-width:1200px;margin:auto;padding:4rem 2rem}
+
+.hero{text-align:center;margin-bottom:4rem}
+.hero h2{
+ font-size:2.6rem;
+ background:linear-gradient(90deg,var(--neon),var(--pink));
+ -webkit-background-clip:text;color:transparent
+}
+.hero p{color:#aaa;max-width:600px;margin:1rem auto}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+ gap:2.5rem;
+}
+
+.card{
+ background:var(--card);
+ border-radius:22px;
+ padding:2rem;
+ transition:var(--tr);
+ border:1px solid rgba(255,255,255,.08);
+ position:relative;
+}
+.card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 0 35px var(--neon)}
+
+.badge{
+ position:absolute;top:1.2rem;right:1.2rem;
+ padding:.35rem .9rem;border-radius:999px;
+ font-size:.75rem;
+ background:linear-gradient(135deg,var(--gold),var(--pink));
+ color:#000;font-weight:700
+}
+
+.card h3{color:var(--neon);margin-bottom:.8rem}
+.card li{color:#ccc;margin:.45rem 0;font-size:.9rem}
+
+.price{
+ font-size:1.4rem;font-weight:800;
+ color:var(--pink);margin:1.2rem 0
+}
+
+.card button{
+ width:100%;padding:.7rem;border-radius:12px;
+ background:linear-gradient(135deg,var(--pink),var(--neon));
+ font-weight:800;color:#000
+}
+
+.cart{
+ position:fixed;right:1.5rem;top:6rem;
+ width:340px;
+ background:var(--card);
+ border-radius:22px;
+ padding:1.5rem;
+ display:none;
+ box-shadow:0 0 40px rgba(0,255,255,.35);
+ z-index:2000;
+}
+.cart h4{color:var(--neon);margin-bottom:.8rem}
+.cart-item{
+ display:flex;justify-content:space-between;align-items:center;
+ margin:.6rem 0;font-size:.9rem
+}
+.cart-item input{
+ width:55px;background:#111;color:#fff;
+ border:none;border-radius:8px;text-align:center
+}
+
+.toast{
+ position:fixed;bottom:1.2rem;left:50%;
+ transform:translateX(-50%);
+ background:linear-gradient(135deg,var(--neon),var(--pink));
+ color:#000;padding:.8rem 1.6rem;
+ border-radius:14px;opacity:0;
+ transition:.4s;font-weight:700;
+ z-index:3000
+}
+.toast.show{opacity:1}
+</style>
+</head>
+
+<body>
+
+<nav>
+ <h1>FathirDevZx</h1>
+ <button onclick="toggleCart()">Keranjang</button>
+</nav>
+
+<main>
+<section class="hero">
+ <h2>Web Development Agency</h2>
+ <p>Membangun website modern, cepat, dan profesional untuk brand yang ingin naik level.</p>
+</section>
+
+<section class="grid" id="grid"></section>
+</main>
+
+<div class="cart" id="cart">
+ <h4>Keranjang</h4>
+ <div id="items"></div>
+ <p>Total: Rp <span id="total">0</span></p>
+ <button onclick="checkout()">Checkout</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
 const services=[
 {
  id:1,
