@@ -13,106 +13,120 @@
  --gold:#ffaa00;
  --bg:#070707;
  --glass:rgba(255,255,255,0.06);
- --card:rgba(15,15,15,0.9);
+ --card:rgba(15,15,15,0.92);
  --blur:blur(14px);
- --tr:0.45s cubic-bezier(.4,0,.2,1);
+ --tr:.45s cubic-bezier(.4,0,.2,1);
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:radial-gradient(circle at top,#0f0f0f,#000);color:#fff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{background:radial-gradient(circle at top,#0f0f0f,#000);color:#fff;overflow-x:hidden}
 
+/* NAV */
 nav{
  position:sticky;top:0;z-index:1000;
  display:flex;justify-content:space-between;align-items:center;
  padding:1.2rem 2.5rem;
  background:var(--glass);
  backdrop-filter:var(--blur);
- border-bottom:1px solid rgba(255,255,255,0.08);
+ border-bottom:1px solid rgba(255,255,255,.08);
 }
-nav h1{color:var(--neon);font-size:1.6rem}
-nav button{
+nav h1{color:var(--neon)}
+.cart-btn{
+ position:relative;
  background:linear-gradient(135deg,var(--pink),var(--neon));
- padding:.6rem 1.3rem;border-radius:10px;
- font-weight:700;color:#000;border:none
+ padding:.6rem 1.4rem;border-radius:12px;
+ font-weight:800;border:none;color:#000;cursor:pointer
+}
+.cart-count{
+ position:absolute;top:-6px;right:-6px;
+ background:var(--gold);
+ color:#000;font-size:.7rem;
+ padding:3px 7px;border-radius:999px;
+ font-weight:800
 }
 
+/* MAIN */
 main{max-width:1200px;margin:auto;padding:4rem 2rem}
-
 .hero{text-align:center;margin-bottom:4rem}
 .hero h2{
- font-size:2.6rem;
+ font-size:3rem;
  background:linear-gradient(90deg,var(--neon),var(--pink));
  -webkit-background-clip:text;color:transparent
 }
-.hero p{color:#aaa;max-width:600px;margin:1rem auto}
+.hero p{color:#aaa;max-width:640px;margin:1rem auto}
 
+/* GRID */
 .grid{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
  gap:2.5rem;
+ margin-bottom:5rem;
 }
-
 .card{
+ opacity:0;transform:translateY(40px);
  background:var(--card);
  border-radius:22px;
  padding:2rem;
- transition:var(--tr);
  border:1px solid rgba(255,255,255,.08);
- position:relative;
+ transition:var(--tr);
+ position:relative
 }
-.card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 0 35px var(--neon)}
-
+.card.show{opacity:1;transform:none}
+.card:hover{
+ transform:translateY(-12px) scale(1.02);
+ box-shadow:0 0 45px rgba(0,255,255,.35)
+}
 .badge{
- position:absolute;top:1.2rem;right:1.2rem;
- padding:.35rem .9rem;border-radius:999px;
- font-size:.75rem;
+ position:absolute;top:1rem;right:1rem;
  background:linear-gradient(135deg,var(--gold),var(--pink));
- color:#000;font-weight:700
+ color:#000;font-weight:800;
+ padding:.35rem .9rem;border-radius:999px;
+ font-size:.75rem
 }
-
-.card h3{color:var(--neon);margin-bottom:.8rem}
-.card li{color:#ccc;margin:.45rem 0;font-size:.9rem}
-
-.price{
- font-size:1.4rem;font-weight:800;
- color:var(--pink);margin:1.2rem 0
-}
-
+.card h3{color:var(--neon)}
+.card li{color:#ccc;margin:.4rem 0;font-size:.9rem}
+.price{color:var(--pink);font-size:1.4rem;font-weight:800;margin:1rem 0}
 .card button{
- width:100%;padding:.7rem;border-radius:12px;
+ width:100%;padding:.7rem;
  background:linear-gradient(135deg,var(--pink),var(--neon));
- font-weight:800;color:#000;border:none
+ border:none;border-radius:12px;
+ font-weight:800;color:#000;cursor:pointer
 }
 
+/* CART */
 .cart{
  position:fixed;right:1.5rem;top:6rem;
- width:340px;
+ width:360px;
  background:var(--card);
  border-radius:22px;
  padding:1.5rem;
- display:none;
  box-shadow:0 0 40px rgba(0,255,255,.35);
- z-index:2000;
+ transform:translateX(120%);
+ transition:.5s ease;
+ z-index:2000
 }
-.cart h4{color:var(--neon);margin-bottom:.8rem}
+.cart.show{transform:none}
+.cart h4{color:var(--neon)}
 .cart-item{
  display:flex;justify-content:space-between;align-items:center;
- margin:.6rem 0;font-size:.9rem
+ margin:.7rem 0;font-size:.9rem
 }
-.cart-item input{
- width:55px;background:#111;color:#fff;
- border:none;border-radius:8px;text-align:center
+.qty{display:flex;gap:.4rem;align-items:center}
+.qty button{
+ background:#111;color:#fff;border:none;
+ width:26px;height:26px;border-radius:6px;
+ cursor:pointer
 }
+.remove{color:#ff4d4d;cursor:pointer;font-weight:700}
 
-.toast{
- position:fixed;bottom:1.2rem;left:50%;
- transform:translateX(-50%);
- background:linear-gradient(135deg,var(--neon),var(--pink));
- color:#000;padding:.8rem 1.6rem;
- border-radius:14px;opacity:0;
- transition:.4s;font-weight:700;
- z-index:3000
+/* FOOTER */
+footer{
+ text-align:center;padding:2.5rem;
+ color:#777;font-size:.9rem
 }
-.toast.show{opacity:1}
+footer span{
+ color:var(--neon);
+ text-shadow:0 0 15px var(--neon)
+}
 </style>
 </head>
 
@@ -120,13 +134,16 @@ main{max-width:1200px;margin:auto;padding:4rem 2rem}
 
 <nav>
  <h1>FathirDevZx</h1>
- <button onclick="toggleCart()">Keranjang</button>
+ <button class="cart-btn" onclick="toggleCart()">
+  Keranjang
+  <span class="cart-count" id="cartCount">0</span>
+ </button>
 </nav>
 
 <main>
 <section class="hero">
- <h2>Web Development Agency</h2>
- <p>Membangun website modern, cepat, dan profesional untuk brand yang ingin naik level.</p>
+ <h2>Digital Web Agency FathirDevZx</h2>
+ <p>Website cepat, modern, dan siap online untuk bisnis yang ingin naik level.</p>
 </section>
 
 <section class="grid" id="grid"></section>
@@ -135,11 +152,13 @@ main{max-width:1200px;margin:auto;padding:4rem 2rem}
 <div class="cart" id="cart">
  <h4>Keranjang</h4>
  <div id="items"></div>
- <p>Total: Rp <span id="total">0</span></p>
- <button onclick="checkout()">Checkout</button>
+ <p>Total: Rp <b id="total">0</b></p>
+ <button onclick="checkout()">Checkout WhatsApp</button>
 </div>
 
-<div class="toast" id="toast"></div>
+<footer>
+ © 2026 <span>FathirDevZx</span> — Build with precision & vision
+</footer>
 
 <script>
 let cart=[];
@@ -147,120 +166,88 @@ const grid=document.getElementById('grid');
 const cartBox=document.getElementById('cart');
 const items=document.getElementById('items');
 const totalEl=document.getElementById('total');
-const toast=document.getElementById('toast');
-
-function toastShow(t){
- toast.textContent=t;
- toast.classList.add('show');
- setTimeout(()=>toast.classList.remove('show'),2500);
-}
+const countEl=document.getElementById('cartCount');
 
 const services=[
- {
-  id:1,
-  name:"Murid Web AI",
-  price:25000,
-  badge:"Basic",
-  list:[
-   "Source code lengkap",
-   "Belajar bikin web dari nol",
-   "Akses materi internal",
-   "❌ DILARANG membuka murid",
-   "❌ DILARANG menjual ulang materi",
-   "⚠️ Jika ketahuan melanggar",
-   "⚠️ Dikeluarkan dari grup permanen",
-   "⚠️ Hukuman berat tanpa refund"
-  ]
- },
- {
-  id:2,
-  name:"Web AI Owner",
-  price:29000,
-  badge:"Recommended",
-  list:[
-   "Hak admin grup",
-   "Boleh mengelola murid",
-   "Boleh membuka murid",
-   "❌ DILARANG membuka murid di luar grup ini",
-   "⚠️ Pelanggaran = hak owner dicabut"
-  ]
- }
+ {id:1,name:"Murid Web AI",price:25000,badge:"Basic",list:[
+  "Source code lengkap","Belajar web dari nol","Akses materi","Tanpa jual ulang"
+ ]},
+ {id:2,name:"Web AI Owner",price:29000,badge:"Recommended",list:[
+  "Hak admin","Boleh add member","Support langsung"
+ ]},
+ {id:3,name:"Upload Hosting",price:5000,badge:"Hosting",list:[
+  "Online 24/7","SSL aktif","Support teknis"
+ ]},
+ {id:4,name:"Owner Grup Premium",price:33000,badge:"Best Value",list:[
+  "Boleh open murid","Bisa development","Admin grup"
+ ]}
 ];
 
 services.forEach(s=>{
  grid.innerHTML+=`
-  <div class="card">
-   <span class="badge">${s.badge}</span>
-   <h3>${s.name}</h3>
-   <ul>${s.list.map(l=>`<li>${l}</li>`).join('')}</ul>
-   <div class="price">Rp ${s.price.toLocaleString('id-ID')}</div>
-   <button onclick="addItem(${s.id})">Tambah ke Keranjang</button>
-  </div>`;
+ <div class="card">
+  <span class="badge">${s.badge}</span>
+  <h3>${s.name}</h3>
+  <ul>${s.list.map(l=>`<li>${l}</li>`).join('')}</ul>
+  <div class="price">Rp ${s.price.toLocaleString('id-ID')}</div>
+  <button onclick="add(${s.id})">Tambah</button>
+ </div>`;
 });
 
-function addItem(id){
+/* Cart Logic */
+function add(id){
  const s=services.find(x=>x.id===id);
  const e=cart.find(x=>x.id===id);
  e ? e.qty++ : cart.push({...s,qty:1});
- renderCart();
- toastShow("Ditambahkan ke keranjang");
+ render();
 }
-
-function renderCart(){
- if(!cart.length){
-  cartBox.style.display='none';
-  return;
- }
- cartBox.style.display='block';
- items.innerHTML='';
- let total=0;
-
+function render(){
+ items.innerHTML='';let total=0,count=0;
  cart.forEach(i=>{
-  total+=i.price*i.qty;
+  total+=i.price*i.qty;count+=i.qty;
   items.innerHTML+=`
    <div class="cart-item">
     <span>${i.name}</span>
-    <input type="number" min="1" value="${i.qty}"
-     onchange="updateQty(${i.id},this.value)">
+    <div class="qty">
+     <button onclick="chg(${i.id},-1)">−</button>
+     ${i.qty}
+     <button onclick="chg(${i.id},1)">+</button>
+    </div>
+    <span class="remove" onclick="del(${i.id})">✕</span>
    </div>`;
  });
-
  totalEl.textContent=total.toLocaleString('id-ID');
+ countEl.textContent=count;
 }
-
-function updateQty(id,v){
+function chg(id,v){
  const i=cart.find(x=>x.id===id);
- i.qty=Math.max(1,parseInt(v)||1);
- renderCart();
+ i.qty+=v;if(i.qty<=0)del(id);render();
 }
-
-function toggleCart(){
- cartBox.style.display =
-  cartBox.style.display==='block' ? 'none' : 'block';
+function del(id){
+ cart=cart.filter(x=>x.id!==id);render();
 }
-
+function toggleCart(){cartBox.classList.toggle('show')}
 function checkout(){
- if(!cart.length){
-  toastShow("Keranjang masih kosong");
-  return;
- }
-
- let pesan="Halo, saya mau order:%0A%0A";
- let total=0;
-
+ let msg="Halo, saya mau order:%0A%0A";
+ let t=0;
  cart.forEach(i=>{
-  total+=i.price*i.qty;
-  pesan+=`• ${i.name} x${i.qty} = Rp ${(i.price*i.qty).toLocaleString('id-ID')}%0A`;
+  t+=i.price*i.qty;
+  msg+=`• ${i.name} x${i.qty}%0A`;
  });
-
- pesan+=`%0A*Total: Rp ${total.toLocaleString('id-ID')}*`;
-
- window.open("https://wa.me/6285811696114?text="+pesan,"_blank");
+ msg+=`%0ATotal: Rp ${t.toLocaleString('id-ID')}`;
+ window.open("https://wa.me/6285811696114?text="+msg);
 }
+
+/* Scroll Reveal */
+const obs=new IntersectionObserver(e=>{
+ e.forEach(x=>x.isIntersecting&&x.target.classList.add('show'))
+},{threshold:.15});
+document.querySelectorAll('.card').forEach(c=>obs.observe(c));
 </script>
 
 </body>
 </html>
+
 
 <!DOCTYPE html>
 <html lang="id">
