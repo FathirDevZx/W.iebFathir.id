@@ -1,3 +1,243 @@
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FathirDevZx — Web Development Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{
+ --neon:#00fff7;
+ --pink:#ff00d4;
+ --gold:#ffaa00;
+ --glass:rgba(255,255,255,.06);
+ --card:rgba(15,15,15,.94);
+ --blur:blur(16px);
+ --tr:.6s cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{
+ background:radial-gradient(circle at top,#0f0f0f,#000);
+ color:#fff;overflow-x:hidden
+}
+
+/* NAV */
+nav{
+ position:sticky;top:0;z-index:1000;
+ display:flex;justify-content:space-between;align-items:center;
+ padding:1.2rem 2.5rem;
+ background:var(--glass);
+ backdrop-filter:var(--blur);
+ border-bottom:1px solid rgba(255,255,255,.08);
+}
+nav h1{color:var(--neon);text-shadow:0 0 20px rgba(0,255,255,.6)}
+.cart-btn{
+ position:relative;
+ background:linear-gradient(135deg,var(--pink),var(--neon));
+ padding:.7rem 1.6rem;border-radius:14px;
+ font-weight:900;border:none;color:#000;cursor:pointer;
+ box-shadow:0 0 35px rgba(0,255,255,.45)
+}
+.cart-count{
+ position:absolute;top:-6px;right:-6px;
+ background:var(--gold);color:#000;
+ font-size:.75rem;padding:4px 8px;
+ border-radius:999px;font-weight:900
+}
+
+/* MAIN */
+main{max-width:1200px;margin:auto;padding:4rem 2rem}
+.hero{text-align:center;margin-bottom:4rem}
+.hero h2{
+ font-size:3.2rem;
+ background:linear-gradient(90deg,var(--neon),var(--pink));
+ -webkit-background-clip:text;color:transparent
+}
+.hero p{color:#aaa;max-width:640px;margin:1rem auto}
+
+/* GRID */
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+ gap:2.8rem;
+ margin-bottom:6rem;
+}
+.card{
+ opacity:0;
+ transform:translateY(60px) scale(.96);
+ background:var(--card);
+ border-radius:26px;
+ padding:2.2rem;
+ border:1px solid rgba(255,255,255,.12);
+ transition:var(--tr);
+ box-shadow:0 20px 60px rgba(0,0,0,.85);
+ position:relative
+}
+.card.show{opacity:1;transform:none}
+.card:hover{
+ transform:translateY(-18px) scale(1.04);
+ box-shadow:
+  0 40px 120px rgba(0,0,0,.95),
+  0 0 70px rgba(0,255,255,.55),
+  0 0 140px rgba(255,0,212,.25);
+}
+.badge{
+ position:absolute;top:1rem;right:1rem;
+ background:linear-gradient(135deg,var(--gold),var(--pink));
+ color:#000;font-weight:900;
+ padding:.35rem .9rem;border-radius:999px;
+ font-size:.75rem
+}
+.card h3{color:var(--neon)}
+.card li{color:#ccc;margin:.45rem 0;font-size:.9rem}
+.price{
+ color:var(--pink);
+ font-size:1.6rem;
+ font-weight:900;
+ margin:1.2rem 0
+}
+.card button{
+ width:100%;
+ padding:.95rem;
+ background:linear-gradient(135deg,var(--pink),var(--neon));
+ border:none;border-radius:16px;
+ font-weight:900;color:#000;cursor:pointer;
+ transition:.3s ease;
+ box-shadow:
+  0 12px 35px rgba(255,0,212,.55),
+  0 0 50px rgba(0,255,255,.4);
+}
+.card button:hover{
+ transform:translateY(-3px) scale(1.03);
+}
+
+/* CART */
+.cart{
+ position:fixed;right:1.5rem;top:6rem;
+ width:360px;
+ background:var(--card);
+ border-radius:28px;
+ padding:1.7rem;
+ box-shadow:
+  0 45px 130px rgba(0,0,0,.95),
+  0 0 90px rgba(0,255,255,.45);
+ transform:translateX(140%) scale(.9);
+ opacity:0;
+ transition:var(--tr);
+ z-index:2000
+}
+.cart.show{transform:none;opacity:1}
+
+/* TOAST */
+#toast{
+ position:fixed;
+ bottom:2rem;
+ left:50%;
+ transform:translateX(-50%) translateY(30px);
+ background:linear-gradient(135deg,var(--pink),var(--neon));
+ color:#000;font-weight:900;
+ padding:.9rem 1.6rem;
+ border-radius:999px;
+ box-shadow:
+  0 15px 45px rgba(0,0,0,.85),
+  0 0 60px rgba(0,255,255,.6);
+ opacity:0;
+ pointer-events:none;
+ transition:.45s cubic-bezier(.16,1,.3,1);
+ z-index:3000;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+footer{text-align:center;padding:2.5rem;color:#777}
+</style></head><body><nav>
+ <h1>FathirDevZx</h1>
+ <button class="cart-btn" onclick="toggleCart()">
+  Keranjang <span class="cart-count" id="cartCount">0</span>
+ </button>
+</nav><main>
+<section class="hero">
+ <h2>Digital Web Agency</h2>
+ <p>Website fleksibel, bisa dijual ulang, dan scalable.</p>
+</section><section class="grid" id="grid"></section>
+</main><div class="cart" id="cart">
+ <h4>Keranjang</h4>
+ <div id="items"></div>
+ <p>Total: Rp <b id="total">0</b></p>
+ <button onclick="checkout()">Bayar via DANA</button>
+</div><div id="toast">✓ Masuk keranjang</div><footer>© 2026 FathirDevZx</footer><script>
+(() => {
+
+let cart=[],toastTimer;
+const grid=document.getElementById('grid');
+const cartBox=document.getElementById('cart');
+const items=document.getElementById('items');
+const totalEl=document.getElementById('total');
+const countEl=document.getElementById('cartCount');
+const toastEl=document.getElementById('toast');
+
+const services=[
+ {id:1,name:"Murid Web AI",price:15000,badge:"Starter",
+  list:["Source code web AI","Bisa buat web sepuasnya","Bisa jual jasa"]},
+
+ {id:2,name:"Murid Owner AI",price:19000,badge:"Recommended",
+  list:["Hak admin penuh","Balik modal lebih cepet","Bisa add member"]},
+
+ {id:3,name:"Hosting",price:5000,badge:"Hosting",
+  list:["Web publik","Online 24/7","SSL aktif","Web bisa dilihat publik"]},
+
+ {id:4,name:"Premium AI",price:22000,badge:"Best Value",
+  list:["Open murid luar grup","Mentor & agency","Fleksibel"]}
+];
+
+services.forEach(s=>{
+ grid.innerHTML+=`
+ <div class="card">
+  <span class="badge">${s.badge}</span>
+  <h3>${s.name}</h3>
+  <ul>${s.list.map(l=>`<li>${l}</li>`).join('')}</ul>
+  <div class="price">Rp ${s.price.toLocaleString('id-ID')}</div>
+  <button onclick="add(${s.id})">Tambah</button>
+ </div>`;
+});
+
+window.add=id=>{
+ const s=services.find(x=>x.id===id);
+ const e=cart.find(x=>x.id===id);
+ e?e.qty++:cart.push({...s,qty:1});
+ render();
+ toast();
+ cartBox.classList.add('show');
+};
+
+window.toggleCart=()=>cartBox.classList.toggle('show');
+
+function toast(){
+ clearTimeout(toastTimer);
+ toastEl.classList.add('show');
+ toastTimer=setTimeout(()=>toastEl.classList.remove('show'),1800);
+}
+
+function render(){
+ items.innerHTML='';let total=0,count=0;
+ cart.forEach(i=>{
+  total+=i.price*i.qty;count+=i.qty;
+  items.innerHTML+=`<div>${i.name} x${i.qty}</div>`;
+ });
+ totalEl.textContent=total.toLocaleString('id-ID');
+ countEl.textContent=count;
+}
+
+window.checkout=()=>{
+ if(!cart.length) return alert("Keranjang kosong");
+};
+
+const obs=new IntersectionObserver(e=>{
+ e.forEach(x=>x.isIntersecting&&x.target.classList.add('show'))
+},{threshold:.15});
+document.querySelectorAll('.card').forEach(c=>obs.observe(c));
+
+})();
+</script></body>
+ </html>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
