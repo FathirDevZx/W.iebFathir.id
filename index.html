@@ -106,9 +106,6 @@ main{max-width:1200px;margin:auto;padding:4rem 2rem}
   0 12px 35px rgba(255,0,212,.55),
   0 0 50px rgba(0,255,255,.4);
 }
-.card button:hover{
- transform:translateY(-3px) scale(1.03);
-}
 .cart{
  position:fixed;right:1.5rem;top:6rem;
  width:360px;
@@ -170,7 +167,7 @@ footer{text-align:center;padding:2.5rem;color:#777}
 <main>
 <section class="hero">
  <h2>Digital Web Agency</h2>
- <p>Website fleksibel, bisa dijual ulang, dan scalable.</p>
+ <p>Website fleksibel, siap dijual, dan tampilan premium futuristik.</p>
 </section>
 
 <section class="grid" id="grid"></section>
@@ -183,22 +180,22 @@ footer{text-align:center;padding:2.5rem;color:#777}
  <button onclick="checkout()">Bayar via DANA</button>
 </div>
 
-<div id="toast">✓ Masuk keranjang</div>
+<div id="toast">✓ Ditambahkan ke keranjang</div>
 
-<footer>© 2026 FathirDevZx</footer>
+<footer>FathirDevZx © 2026</footer>
 
 <script>
 let cart=[],toastTimer;
 
 const services=[
- {id:1,name:"Murid Web Ai",price:15000,badge:"Starter",
-  list:["Source code web Ai","Bisa buat web sepuasnya","Bisa jual jasa"]},
- {id:2,name:"Murid Owner Ai",price:19000,badge:"Recommended",
-  list:["Hak admin penuh","Balik modal lebih cepet","Bisa add member"]},
+ {id:1,name:"Murid Web AI",price:15000,badge:"Starter",
+  list:["Source code AI","Bebas buat web","Bisa jual jasa"]},
+ {id:2,name:"Owner Web AI",price:19000,badge:"Recommended",
+  list:["Hak admin","Balik modal cepat","Open murid"]},
  {id:3,name:"Hosting",price:5000,badge:"Hosting",
   list:["Web publik","Online 24/7","SSL aktif"]},
- {id:4,name:"Premium Ai",price:22000,badge:"Best Value",
-  list:["Open murid luar","Mentor & agency","Fleksibel"]}
+ {id:4,name:"Premium AI",price:22000,badge:"Best",
+  list:["Mentor","Agency","Fleksibel"]}
 ];
 
 const grid=document.getElementById('grid');
@@ -260,10 +257,25 @@ function showToast(){
 }
 
 function checkout(){
- if(!cart.length) return alert("Keranjang kosong");
- const total=cart.reduce((a,b)=>a+(b.price*b.qty),0);
- const danaNumber="085720512705";
- window.location.href=`https://link.dana.id/qr/${danaNumber}?amount=${total}`;
+ if(!cart.length){
+  alert("Keranjang masih kosong");
+  return;
+ }
+
+ const total = cart.reduce((a,b)=>a+(b.price*b.qty),0);
+ const danaNumber = "085720512705";
+
+ navigator.clipboard.writeText(total.toString());
+
+ alert(
+  "Nominal Rp " + total.toLocaleString("id-ID") +
+  " berhasil disalin.\n\n" +
+  "Transfer via DANA ke:\n" +
+  danaNumber +
+  "\n\nPaste nominal lalu klik Bayar."
+ );
+
+ window.open("https://www.dana.id/", "_blank");
 }
 
 const obs=new IntersectionObserver(e=>{
@@ -274,6 +286,7 @@ document.querySelectorAll('.card').forEach(c=>obs.observe(c));
 
 </body>
 </html>
+
 
 <!DOCTYPE html>
 <html lang="id">
